@@ -2,6 +2,7 @@
 #include "utils.h"
 #include <cstring>
 #include <string>
+#include "utils.h"
 
 void* MeySQL::Row::get_cell(size_t index) const {
     return cells[index];
@@ -27,6 +28,12 @@ void MeySQL::Row::set_cell(double value, size_t index) {
 MeySQL::Row::Row(MeySQL::ColumnTypes* types) {
     cells = new void*[types->get_size()];
     initialize_cells(types);
+}
+MeySQL::Row::Row(const MeySQL::Database* db, MeySQL::ColumnTypes* types):Row(types){
+    row_id = db->gen_row_id();
+}
+MeySQL::Row::Row(MeySQL::row_idtype id, MeySQL::ColumnTypes* types):Row(types){
+    row_id = id;
 }
 
 void MeySQL::Row::add_cell(MeySQL::ColumnTypes* types) {

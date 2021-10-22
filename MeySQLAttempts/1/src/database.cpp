@@ -20,3 +20,7 @@ void MeySQL::Database::addTable(const char* tableName, MeySQL::Table* table) {
 
     size++;
 }
+
+MeySQL::row_idtype MeySQL::Database::gen_row_id() {
+    
+}

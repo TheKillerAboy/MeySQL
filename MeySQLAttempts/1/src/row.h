@@ -4,10 +4,13 @@
 #include <stdlib.h>
 #include <string>
 #include "columntypes.h"
+#include "database.h"
+#include "utils.h"
 
 namespace MeySQL{
     class Row{
     private:
+        MeySQL::row_idtype row_id;
         void** cells;
     public:
         void* get_cell(size_t index) const;
@@ -24,6 +27,8 @@ namespace MeySQL{
         void deinitialize_cells(MeySQL::ColumnTypes* types);
 
         Row(MeySQL::ColumnTypes* types);
+        Row(const MeySQL::Database* db, MeySQL::ColumnTypes* types);
+        Row(row_idtype id, MeySQL::ColumnTypes* types);
 
         void add_cell(MeySQL::ColumnTypes* type);
     };

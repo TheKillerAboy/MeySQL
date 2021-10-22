@@ -2,6 +2,7 @@
 #define MEYSQL_DATABASE_H
 
 #include "table.h"
+#include "utils.h"
 
 namespace MeySQL{
     class Database{
@@ -10,6 +11,8 @@ namespace MeySQL{
 
         MeySQL::Table** tables;
         char** tableNames;
+
+        MeySQL::row_idtype cur_row_id;
     public:
         Database();
         
@@ -17,6 +20,8 @@ namespace MeySQL{
 
         void read(const char* file);
         void write(const char* file) const;
+
+        row_idtype gen_row_id();
     };
 }
 
