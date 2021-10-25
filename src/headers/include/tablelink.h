@@ -7,10 +7,11 @@
 namespace MeySQL{
     class TableLink{
     private:
-        Type primaryType, foreignType;
         Table* primaryTable, foreignTable;
-        //TODO: implement maping from prim to sets of forign key record ids
-        //TODO: implement speed effienct varients for types
+	size_t primaryIndex, foreignIndex;
+
+	//TODO Add prim lookup for forgns
+	//TODO Add prim to forgns links
     public:
         TableLink();
         ~TableLink();
