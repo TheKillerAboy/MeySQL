@@ -1,0 +1,7 @@
+/home/kalilaptop/Documents/GitHub/MeySQL/build/CMakeFiles/install/strip.dir
+/home/kalilaptop/Documents/GitHub/MeySQL/build/CMakeFiles/install/local.dir
+/home/kalilaptop/Documents/GitHub/MeySQL/build/CMakeFiles/install.dir
+/home/kalilaptop/Documents/GitHub/MeySQL/build/CMakeFiles/list_install_components.dir
+/home/kalilaptop/Documents/GitHub/MeySQL/build/CMakeFiles/rebuild_cache.dir
+/home/kalilaptop/Documents/GitHub/MeySQL/build/CMakeFiles/edit_cache.dir
+/home/kalilaptop/Documents/GitHub/MeySQL/build/CMakeFiles/MeySQL.dir

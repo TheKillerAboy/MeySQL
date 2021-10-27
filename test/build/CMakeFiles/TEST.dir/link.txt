@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/TEST.dir/main.cpp.o -o TEST  -Wl,-rpath,/home/kalilaptop/Documents/GitHub/MeySQL/build -lSHARED /home/kalilaptop/Documents/GitHub/MeySQL/build/libMeySQL.so.1.0 

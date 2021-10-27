@@ -1,0 +1,4 @@
+/usr/local/lib/libMeySQL.so.1.0
+/usr/local/lib/libMeySQL.so.1
+/usr/local/lib/libMeySQL.so
+/usr/local/share/pkgconfig/MeySQLConfig.h
