@@ -51,8 +51,10 @@ set(
 #create library
 add_library(
 	MeySQL 
-	SHARED ${SOURCE_FILES} ${HEADER_FILES}
+	SHARED ${SOURCE_FILES}
 )
+#header api include
+#set_target_properties(MeySQL PROPERTIES PUBLIC_HEADER ${HEADER_FILES})
 
 #include header include directory
 target_include_directories(
@@ -87,10 +89,13 @@ include(GNUInstallDirs)
 install(
 	TARGETS MeySQL
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-	PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 install(
 	FILES ${CMAKE_BINARY_DIR}/MeySQLConfig.h
 	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig
+)
+install(
+	FILES ${HEADER_FILES} 
+	DESTINATION include/MeySQL
 )

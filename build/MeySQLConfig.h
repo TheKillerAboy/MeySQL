@@ -1,2 +1,0 @@
-#define MeySQL_VERSION_MAJOR 1
-#define MeySQL_VERSION_MINOR 0
