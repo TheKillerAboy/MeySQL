@@ -4,7 +4,9 @@
 
 MeySQL::RowCell::RowCell():MeySQL::RowCell(nullptr, MeySQL::CellType::NULLTYPE){
 }
-MeySQL::RowCell::RowCell(void* value, CellType type){
+MeySQL::RowCell::RowCell(const CellType& type):MeySQL::RowCell(nullptr, type){
+}
+MeySQL::RowCell::RowCell(void* value, const CellType& type){
     this->value = value;
     this->type = type;
 }

@@ -10,7 +10,8 @@ namespace MeySQL{
         CellType type;
     public:
         RowCell();
-        RowCell(void* value, CellType type);
+        RowCell(const CellType& type);
+        RowCell(void* value,const CellType& type);
 
         ~RowCell();
 
