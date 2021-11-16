@@ -21,12 +21,12 @@ namespace MeySQL{
         double get_double() const;
         const char* get_string() const;
 
-        bool set_bool();
-        char set_char();
-        int set_int();
-        float set_float();
-        double set_double();
-        const char* set_string();
+        bool set_bool(bool value_);
+        char set_char(char value_);
+        int set_int(int value_);
+        float set_float(float value_);
+        double set_double(double value_);
+        const char* set_string(const char* value_);
 
         void set_null();
     };
