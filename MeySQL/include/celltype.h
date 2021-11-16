@@ -8,7 +8,8 @@ namespace MeySQL{
         INT,
         FLOAT,
         DOUBLE,
-        STRING
+        STRING,
+        NULL
     };
 }
 
