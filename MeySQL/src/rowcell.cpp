@@ -32,27 +32,27 @@ const char* MeySQL::RowCell::get_string() const{
     return (char*)value;
 }
 
-void MeySQL::RowCell::set_bool(bool value_){
+void MeySQL::RowCell::set_bool(const bool& value_){
     set_null();
     value = new bool;
     *(bool*)value = value_;
 }
-void MeySQL::RowCell::set_char(char value_){
+void MeySQL::RowCell::set_char(const char& value_){
     set_null();
     value = new char;
     *(char*)value = value_;
 }
-void MeySQL::RowCell::set_int(int value_){
+void MeySQL::RowCell::set_int(const int& value_){
     set_null();
     value = new int;
     *(int*)value = value_;
 }
-void MeySQL::RowCell::set_float(float value_){
+void MeySQL::RowCell::set_float(const float& value_){
     set_null();
     value = new float;
     *(float*)value = value_;
 }
-void MeySQL::RowCell::set_double(double value_){
+void MeySQL::RowCell::set_double(const double& value_){
     set_null();
     value = new double;
     *(double*)value = value_;
