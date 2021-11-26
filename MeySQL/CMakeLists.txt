@@ -5,7 +5,7 @@ project(MeySQL VERSION 0.0.1)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_library(
+add_executable(
     MeySQL SHARED
 
     src/main.cpp
