@@ -7,12 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_library(
     MeySQL SHARED
-    src/rowcell.cpp
-)
 
-set_target_properties(
-    MeySQL PROPERTIES 
-    PUBLIC_HEADER include/MeySQL.h
+    src/main.cpp
+    src/rowcell.cpp
 )
 
 configure_file(
@@ -21,24 +18,6 @@ configure_file(
 )
 
 target_include_directories(
-    MeySQL PUBLIC
-    ${PROJECT_BINARY_DIR}
-)
-
-target_include_directories(
     MeySQL PRIVATE
     include
-)
-
-target_include_directories(
-    MeySQL PRIVATE
-    src
-)
-
-include(GNUInstallDirs)
-
-install(
-    TARGETS MeySQL
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
