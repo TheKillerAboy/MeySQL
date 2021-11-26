@@ -3,13 +3,12 @@
 
 namespace MeySQL{
     enum CellType{
-        BOOL,
+        BOAL,
         CHAR,
         INT,
         FLOAT,
         DOUBLE,
-        STRING,
-        NULLTYPE
+        STRING
     };
 }
 
