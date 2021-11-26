@@ -4,5 +4,5 @@ if [!-d ./build]; then
 fi;
 
 cd build
-cmake ../MeySQL
+cmake ..
 cmake --build .
