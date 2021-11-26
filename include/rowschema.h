@@ -22,7 +22,7 @@ namespace MeySQL{
         void set_index(const size_t& index, const CellType& type);
 
         void set_size(const size_t& size);
-    }
+    };
 }
 
 #endif

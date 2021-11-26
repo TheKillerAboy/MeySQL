@@ -1,4 +1,5 @@
 #include "rowschema.h"
+#include "celltype.h"
 
 MeySQL::RowSchema::RowSchema():MeySQL::RowSchema(0){
 }
@@ -9,12 +10,12 @@ MeySQL::RowSchema::RowSchema(const size_t& size){
 MeySQL::RowSchema::~RowSchema(){
 }
 
-CellType MeySQL::RowSchema::get_index(const size_t& index) const{
+MeySQL::CellType MeySQL::RowSchema::get_index(const size_t& index) const{
     return schema[index];
 }
 
 size_t MeySQL::RowSchema::get_size() const{
-    return schema.size;
+    return schema.size();
 }
 
 void MeySQL::RowSchema::set_index(const size_t& index, const CellType& type){

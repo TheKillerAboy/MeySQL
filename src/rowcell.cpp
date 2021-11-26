@@ -34,6 +34,10 @@ const char* MeySQL::RowCell::get_string() const{
     return (char*)value;
 }
 
+bool MeySQL::RowCell::is_null() const{
+    return value == nullptr;
+}
+
 void MeySQL::RowCell::set_bool(const bool& value_){
     set_null();
     value = new bool;
@@ -88,4 +92,6 @@ void MeySQL::RowCell::set_null(){
         case NULLTYPE:
             break;
     }
+    value = nullptr;
+    type = NULLTYPE;
 }

@@ -22,6 +22,8 @@ namespace MeySQL{
         double get_double() const;
         const char* get_string() const;
 
+        bool is_null() const;
+
         void set_bool(const bool& value_);
         void set_char(const char& value_);
         void set_int(const int& value_);
