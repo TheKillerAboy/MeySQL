@@ -1,7 +1,9 @@
 #!/bin/bash
-if [!-d ./build]; then
+if [ ! -d ./build ]; then
     mkdir ./build
 fi;
+
+# set local CC and CXX variables if running clang to gcc variants (macos)
 
 cd build
 cmake ..

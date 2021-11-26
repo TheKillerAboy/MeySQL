@@ -2,6 +2,16 @@ cmake_minimum_required(VERSION 3.21.4)
 
 project(MeySQL VERSION 0.0.1)
 
+if(DEFINED ENV{CC})
+    set(CMAKE_C_COMPILER $ENV{CC})
+endif()
+if(DEFINED ENV{CXX})
+    set(CMAKE_CXX_COMPILER $ENV{CXX})
+endif()
+
+message("Using ${CMAKE_C_COMPILER} for CC")
+message("Using ${CMAKE_CXX_COMPILER} for CXX")
+
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
