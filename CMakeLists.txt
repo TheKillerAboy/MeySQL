@@ -22,7 +22,11 @@ add_executable(
 
     src/main.cpp
     src/rowcell.cpp
+    src/connection.cpp
+    src/server.cpp
 )
+
+set(PORT 8080)
 
 configure_file(
     include/MeySQLConfig.h.in
