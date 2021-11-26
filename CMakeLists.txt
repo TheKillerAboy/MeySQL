@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_executable(
-    MeySQL SHARED
+    MeySQL
 
     src/main.cpp
     src/rowcell.cpp
