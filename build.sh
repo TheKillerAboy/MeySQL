@@ -1,4 +1,21 @@
 #!/bin/bash
+
+delete='false'
+run='false'
+
+while getopts dr flag
+do
+    case "${flag}" in
+        d) delete='true';;
+        r) run='true';;
+    esac
+done
+
+if [ "$delete" = "true" ]; then
+    rm -rf ./build
+    echo "Removed Folder"
+fi;
+
 if [ ! -d ./build ]; then
     mkdir ./build
 fi;
@@ -9,10 +26,7 @@ cd build
 cmake ..
 cmake --build .
 
-echo -n "Run build ([y]/n)? "
-read answer
-answer=${answer:-y}
-
-if [ "$answer" != "${answer#[Yy]}" ] ;then
+if [ "$run" = "true" ]; then
+    echo "Running"
     ./MeySQL
-fi
+fi;

@@ -35,6 +35,7 @@ add_executable(
     src/connection.cpp
     src/server.cpp
 )
+add_dependencies(MeySQL sockpp)
 
 set(PORT 8080)
 
@@ -46,4 +47,8 @@ configure_file(
 target_include_directories(
     MeySQL PRIVATE
     include
+)
+target_include_directories(
+    MeySQL PUBLIC
+    ${PROJECT_BINARY_DIR}/include
 )

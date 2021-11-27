@@ -3,13 +3,14 @@
 #include "sockpp/tcp_socket.h"
 #include "sockpp/tcp_acceptor.h"
 #include <iostream>
+#include "MeySQLConfig.h"
 
 MeySQL::Connect::Server::Server(){}
 
 MeySQL::Connect::Server::~Server(){}
 
 void MeySQL::Connect::Server::run(){
-    int16_t port = 12345;
+    int16_t port = MeySQL_PORT;
     sockpp::tcp_acceptor acc(port);
 
     if (!acc)
