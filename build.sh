@@ -1,17 +1,19 @@
 #!/bin/bash
 
-delete='false'
-run='false'
+DELETE=false
+RUN=false
+ENABLE_BUILD_ERROR_FLAGS=false
 
-while getopts dr flag
+while getopts dre flag
 do
     case "${flag}" in
-        d) delete='true';;
-        r) run='true';;
+        d) DELETE=true;;
+        r) RUN=true;;
+        e) ENABLE_BUILD_ERROR_FLAGS=true;;
     esac
 done
 
-if [ "$delete" = "true" ]; then
+if [ "$DELETE" = true ]; then
     rm -rf ./build
     echo "Removed Folder"
 fi;
@@ -22,11 +24,15 @@ fi;
 
 # set local CC and CXX variables if running clang to gcc variants (macos)
 
+export ENABLE_BUILD_ERROR_FLAGS;
+
 cd build
 cmake ..
 cmake --build .
 
-if [ "$run" = "true" ]; then
+if [ $? -eq 0 ]; then
+    if [ "$RUN" = true ]; then
     echo "Running"
     ./MeySQL
+    fi;
 fi;
