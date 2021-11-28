@@ -19,6 +19,8 @@ if [ "$RUN" -eq 2 ]; then
     exit 0
 fi
 
+#add run type to not compile thridparty
+
 if [ "$DELETE" = true ]; then
     rm -rf ./build
     echo "Removed Folder"
