@@ -1,17 +1,23 @@
 #!/bin/bash
 
 DELETE=false
-RUN=false
+RUN=0
 ENABLE_BUILD_ERROR_FLAGS=false
 
 while getopts dre flag
 do
     case "${flag}" in
         d) DELETE=true;;
-        r) RUN=true;;
+        r) RUN=$((RUN+1));;
         e) ENABLE_BUILD_ERROR_FLAGS=true;;
     esac
 done
+
+if [ "$RUN" -eq 2 ]; then
+    echo "Only running"
+    ./build/MeySQL
+    exit 0
+fi
 
 if [ "$DELETE" = true ]; then
     rm -rf ./build
@@ -31,7 +37,7 @@ cmake ..
 cmake --build .
 
 if [ $? -eq 0 ]; then
-    if [ "$RUN" = true ]; then
+    if [ "$RUN" -eq 1 ]; then
     echo "Running"
     ./MeySQL
     fi;
