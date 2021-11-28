@@ -5,12 +5,14 @@
 #include <thread>
 #include <string>
 
+using namespace std;
+
 namespace MeySQL{
     namespace Connect{
         class Connection{
         private:
             sockpp::tcp_socket sock;
-            std::thread thr;
+            thread thr;
 
             static const size_t PAYLOAD_BUFFER_SIZE = 1024;
         public:
@@ -23,8 +25,8 @@ namespace MeySQL{
 
             sockpp::tcp_socket& get_socket();
 
-            void send(const std::string& msg);
-            std::string recieve();
+            void send(const string& msg);
+            string recieve();
         };
     }
 }

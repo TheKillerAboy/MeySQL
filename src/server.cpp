@@ -30,8 +30,8 @@ void MeySQL::Connect::Server::run(){
                 << acc.last_error_str() << endl;
         }
         else {
-            // MeySQL::Connect::Connection(std::move(sock)).start();
-            auto conn = new Connection(std::move(sock));
+            // MeySQL::Connect::Connection(move(sock)).start();
+            auto conn = new Connection(move(sock));
             Connection::thread_loop(conn);
         }
     }
