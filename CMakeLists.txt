@@ -59,3 +59,10 @@ target_include_directories(
     MeySQL PUBLIC
     ${PROJECT_BINARY_DIR}/include
 )
+if($ENV{ENABLE_BUILD_ERROR_FLAGS})
+    if(MSVC)
+    target_compile_options(MeySQL PRIVATE /W4 /WX)
+    else()
+    target_compile_options(MeySQL PRIVATE -Wall -Wextra -Wpedantic -Werror)
+    endif()
+endif()
