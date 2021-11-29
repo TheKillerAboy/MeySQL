@@ -1,8 +1,6 @@
-#include <iostream>
-#include <boost/log/trivial.hpp>
+#include "server.h"
 
-int main(int, char*[])
-{
-    BOOST_LOG_TRIVIAL(error) << "This is an informational severity message";
-    return 0;
+int main(){
+    MeySQL::Connect::Server server;
+    server.run();
 }

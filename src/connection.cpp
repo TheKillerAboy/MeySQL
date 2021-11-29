@@ -3,6 +3,7 @@
 #include "sockpp/tcp_socket.h"
 #include <string>
 #include <iostream>
+#include "boost/log/trivial.hpp"
 
 using namespace std;
 
@@ -29,14 +30,14 @@ sockpp::tcp_socket& MeySQL::Connect::Connection::get_socket(){
 }
 
 void MeySQL::Connect::Connection::send(const string& msg){
-    cout << "Sending: " << msg << " ";
-    cout << get_socket().write(msg) << endl;
+    BOOST_LOG_TRIVIAL(info) << "Sending: " << msg;
+    get_socket().write(msg);
 }
 
 string MeySQL::Connect::Connection::recieve(){
     char buf[PAYLOAD_BUFFER_SIZE];
     size_t size =  get_socket().read(buf, PAYLOAD_BUFFER_SIZE);
     string msg(buf, size);
-    cout << "Recieved: " << msg << endl;
+    BOOST_LOG_TRIVIAL(info) << "Recieved: " << msg;
     return msg;
 }
