@@ -1,6 +1,6 @@
 **/build
 **/.vscode/
-**/venv
-**/__pycache__
-**/.idea
-**/dist
+**/venv/
+**/__pycache__/
+**/.idea/
+**/dist/
