@@ -337,10 +337,12 @@ add_dependencies(MeySQL boostDownload)
 
 ### listing port
 
-set(PORT 8080)
 
-set(ENV{PORT} $PORT)
+if(NOT DEFINED ENV{MEYSQL_PORT})
+    set(ENV{MEYSQL_PORT} 5332)
+endif()
 
+set(PORT $ENV{MEYSQL_PORT})
 ###
 
 configure_file(

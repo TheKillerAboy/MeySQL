@@ -1,0 +1,1 @@
+pip3 install `python3 meysql_newest_version.py`
