@@ -31,9 +31,9 @@ void MeySQL::Connect::Server::run(){
             BOOST_LOG_TRIVIAL(error) << "Error accepting incoming connection: " << acc.last_error_str();
         }
         else {
-            // MeySQL::Connect::Connection(move(sock)).start();
-            auto conn = new Connection(move(sock));
-            Connection::thread_loop(conn);
+            (new MeySQL::Connect::Connection(move(sock)))->start();
+            // auto conn = new Connection(move(sock));
+            // Connection::thread_loop(conn);
         }
     }
 }

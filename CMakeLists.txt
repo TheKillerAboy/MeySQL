@@ -30,6 +30,7 @@ add_executable(
     src/rowcell.cpp
     src/connection.cpp
     src/server.cpp
+    src/connectionrequests.cpp
 )
 
 ### sockpp import
