@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
 import meysql
+import logging
 
-print(meysql.check_active())
+logging.getLogger().setLevel(logging.DEBUG)
+
+print(meysql.server_config())
