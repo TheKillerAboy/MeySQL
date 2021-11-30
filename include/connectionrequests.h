@@ -12,12 +12,12 @@ namespace MeySQL{
         namespace ConnectionRequests{
             enum ResponseCode {
                 OK,
-                EXIT,
                 ERROR,
                 NOCOMMAND
             };
 
             ResponseCode handle_request_inner(const boost::property_tree::ptree& req, boost::property_tree::ptree& res);
+            void append_status(ResponseCode rescode, boost::property_tree::ptree& res);
             ResponseCode handle_request(const boost::property_tree::ptree& req, boost::property_tree::ptree& res);
         }
     }

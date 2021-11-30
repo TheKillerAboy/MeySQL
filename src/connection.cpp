@@ -31,33 +31,35 @@ MeySQL::Connect::Connection::~Connection(){}
 void MeySQL::Connect::Connection::thread_loop(Connection* con){
     BOOST_LOG_TRIVIAL(debug) << "Created thread for " << *con;
 
-    while (true) {
-        try{
-            auto req = con->recieve();
+    try{
+        auto req = con->recieve();
 
-            boost::property_tree::ptree req_json;
-            istringstream is(req);
-            boost::property_tree::read_json(is, req_json);
+        boost::property_tree::ptree req_json;
+        istringstream is(req);
+        boost::property_tree::read_json(is, req_json);
 
-            boost::property_tree::ptree res_json;
-            auto rescode = MeySQL::Connect::ConnectionRequests::handle_request(req_json, res_json);
+        boost::property_tree::ptree res_json;
+        auto rescode = MeySQL::Connect::ConnectionRequests::handle_request(req_json, res_json);
 
-            if(rescode == MeySQL::Connect::ConnectionRequests::EXIT){
-                break;
+        std::ostringstream res_buf; 
+        boost::property_tree::write_json (res_buf, res_json, false);
+
+        auto res = res_buf.str();
+        con->send(res);
+    }
+    catch (const exception& e){
+        if(con->get_socket()){
+            BOOST_LOG_TRIVIAL(error) << e.what();
+
+            try{
+                boost::property_tree::ptree res_json;
+                MeySQL::Connect::ConnectionRequests::append_status(MeySQL::Connect::ConnectionRequests::ResponseCode::ERROR, res_json);
+                std::ostringstream res_buf; 
+                boost::property_tree::write_json (res_buf, res_json, false);
+                auto res = res_buf.str();
+                con->send(res);
             }
-
-            std::ostringstream res_buf; 
-            boost::property_tree::write_json (res_buf, res_json, false);
-
-            auto res = res_buf.str();
-            con->send(res);
-        }
-        catch (const exception& e){
-            if(con->get_socket()){
-                BOOST_LOG_TRIVIAL(error) << e.what();
-            }
-            
-            break;
+            catch(...){}
         }
     }
 

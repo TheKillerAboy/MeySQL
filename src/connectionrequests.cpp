@@ -8,8 +8,9 @@ using namespace std;
 MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionRequests::handle_request_inner(const boost::property_tree::ptree& req, boost::property_tree::ptree& res){
     try{
         bool found = false;
-        if(req.get<string>("command") == "exit"){
-            return EXIT;
+        auto command = req.get<string>("command");
+        if(command == "check-active"){
+            found = true;
         }
         if(found){
             return OK;
@@ -24,14 +25,10 @@ MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionReq
     }
 }
 
-MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionRequests::handle_request(const boost::property_tree::ptree& req, boost::property_tree::ptree& res){
-    auto rescode = handle_request_inner(req, res);
+void MeySQL::Connect::ConnectionRequests::append_status(MeySQL::Connect::ConnectionRequests::ResponseCode rescode, boost::property_tree::ptree& res){
     switch (rescode) {
         case OK:
             res.put("status", "OK");
-            break;
-        case EXIT:
-            res.put("status", "EXIT");
             break;
         case ERROR:
             res.put("status", "ERROR");
@@ -40,5 +37,10 @@ MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionReq
             res.put("status", "NOCOMMAND");
             break;
     }
+}
+
+MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionRequests::handle_request(const boost::property_tree::ptree& req, boost::property_tree::ptree& res){
+    auto rescode = handle_request_inner(req, res);
+    MeySQL::Connect::ConnectionRequests::append_status(rescode, res);
     return rescode;
 }
