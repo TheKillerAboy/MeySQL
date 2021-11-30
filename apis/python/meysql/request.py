@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import json
 import os
 import socket
@@ -11,3 +12,6 @@ def request(req):
         s.sendall(json.dumps(req).encode())
         res = s.recv(32767)
         return json.loads(res.decode())
+=======
+def request(req):
+>>>>>>> 80ff862 (Init api)

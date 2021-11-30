@@ -339,6 +339,8 @@ add_dependencies(MeySQL boostDownload)
 
 set(PORT 8080)
 
+set(ENV{PORT} $PORT)
+
 ###
 
 configure_file(
