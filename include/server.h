@@ -5,9 +5,9 @@
 #include <pthread.h>
 #include "connection.h"
 
-namespace MeySQL{
-    namespace Connect{
-        class Server{
+namespace MeySQL {
+    namespace Connect {
+        class Server {
         private:
         public:
             Server();

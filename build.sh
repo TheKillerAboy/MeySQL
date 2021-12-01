@@ -3,15 +3,25 @@
 DELETE=false
 RUN=0
 ENABLE_BUILD_ERROR_FLAGS=false
+SKIPSTYLE=false
 
-while getopts dre flag
+while getopts dres flag
 do
     case "${flag}" in
         d) DELETE=true;;
         r) RUN=$((RUN+1));;
         e) ENABLE_BUILD_ERROR_FLAGS=true;;
+        s) SKIPSTYLE=true;;
     esac
 done
+
+if [ "$SKIPSTYLE" = false ]; then
+    printf "###Formatting###\n(use -s to skip this)\n\n"
+    astyleoptions="--style=attach -RNKjSxC80"
+    ./thirdparty/astyle/astyle $astyleoptions "src/*.cpp"
+    ./thirdparty/astyle/astyle $astyleoptions "include/*.h"
+    printf "\n###Formatting###\n"
+fi;
 
 if [ "$RUN" -eq 2 ]; then
     echo "Only running"
