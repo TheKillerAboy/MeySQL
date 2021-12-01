@@ -7,6 +7,7 @@
 #include "connectionrequests.h"
 #include <boost/json.hpp>
 
+using namespace boost;
 using namespace std;
 
 MeySQL::Connect::Connection::Connection(){
@@ -18,7 +19,7 @@ MeySQL::Connect::Connection::Connection(){
 MeySQL::Connect::Connection::Connection(sockpp::tcp_socket sock_){
     sock = new sockpp::tcp_socket;
     thr = nullptr;
-    *sock = move(sock_);
+    *sock = std::move(sock_);
     id = current_id++;
 }
 
@@ -32,22 +33,22 @@ void MeySQL::Connect::Connection::thread_loop(Connection* con){
     try{
         auto req = con->recieve();
 
-        boost::json::object req_json = boost::json::parse(req).as_object();
+        json::object req_json = json::parse(req).as_object();
 
-        boost::json::object res_json;
-        auto rescode = MeySQL::Connect::ConnectionRequests::handle_request(req_json, res_json);
+        json::object res_json;
+        MeySQL::Connect::ConnectionRequests::handle_request(req_json, res_json);
 
-        auto res = boost::json::serialize(res_json);
+        auto res = json::serialize(res_json);
         con->send(res);
     }
-    catch (const exception& e){
+    catch (const std::exception& e){
         if(con->get_socket()){
             BOOST_LOG_TRIVIAL(error) << e.what();
 
             try{
-                boost::json::object res_json;
+                json::object res_json;
                 MeySQL::Connect::ConnectionRequests::append_status(MeySQL::Connect::ConnectionRequests::ResponseCode::ERROR, res_json);
-                auto res = boost::json::serialize(res_json);
+                auto res = json::serialize(res_json);
                 con->send(res);
             }
             catch(...){}

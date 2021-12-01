@@ -5,6 +5,7 @@
 
 #include <boost/json.hpp>
 
+using namespace boost;
 using namespace std;
 
 namespace MeySQL{
@@ -16,12 +17,12 @@ namespace MeySQL{
                 NOCOMMAND
             };
 
-            ResponseCode handle_request_inner(const boost::json::object& req, boost::json::object& res);
-            void append_status(ResponseCode rescode, boost::json::object& res);
-            ResponseCode handle_request(const boost::json::object& req, boost::json::object& res);
+            ResponseCode handle_request_inner(const json::object& req, json::object& res);
+            void append_status(ResponseCode rescode, json::object& res);
+            ResponseCode handle_request(const json::object& req, json::object& res);
 
-            void check_active(const boost::json::object& req, boost::json::object& res);
-            void server_config(const boost::json::object& req, boost::json::object& res);
+            void check_active(const json::object& req, json::object& res);
+            void server_config(const json::object& req, json::object& res);
         }
     }
 }
