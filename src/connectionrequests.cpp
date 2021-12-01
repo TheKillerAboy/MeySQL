@@ -4,14 +4,15 @@
 #include "MeySQLConfig.h"
 #include <boost/json.hpp>
 
+using namespace boost;
 using namespace std;
 
-MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionRequests::handle_request_inner(const boost::json::object& req, boost::json::object& res){
+MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionRequests::handle_request_inner(const json::object& req, json::object& res){
     try{
         bool found = false;
         auto command = req.at("command").as_string();
 
-        boost::json::object data;
+        json::object data;
         res["data"] = data;
 
         if(command == "check-active"){
@@ -29,13 +30,13 @@ MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionReq
             return NOCOMMAND;
         }
     }
-    catch(const exception& e){
+    catch(const std::exception& e){
         res["status-reason"] = e.what();
         return ERROR;
     }
 }
 
-void MeySQL::Connect::ConnectionRequests::append_status(MeySQL::Connect::ConnectionRequests::ResponseCode rescode, boost::json::object& res){
+void MeySQL::Connect::ConnectionRequests::append_status(MeySQL::Connect::ConnectionRequests::ResponseCode rescode, json::object& res){
     switch (rescode) {
         case OK:
             res["status"] = "OK";
@@ -49,15 +50,15 @@ void MeySQL::Connect::ConnectionRequests::append_status(MeySQL::Connect::Connect
     }
 }
 
-MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionRequests::handle_request(const boost::json::object& req, boost::json::object& res){
+MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionRequests::handle_request(const json::object& req, json::object& res){
     auto rescode = handle_request_inner(req, res);
     MeySQL::Connect::ConnectionRequests::append_status(rescode, res);
     return rescode;
 }
 
-void MeySQL::Connect::ConnectionRequests::check_active(const boost::json::object& req, boost::json::object& res){}
+void MeySQL::Connect::ConnectionRequests::check_active(const json::object& req, json::object& res){}
 
-void MeySQL::Connect::ConnectionRequests::server_config(const boost::json::object& req, boost::json::object& res){
+void MeySQL::Connect::ConnectionRequests::server_config(const json::object& req, json::object& res){
     res["version-major"] = MeySQL_VERSION_MAJOR;
     res["version-minor"] = MeySQL_VERSION_MINOR;
     res["MeySQL_PORT"] = MeySQL_PORT;
