@@ -8,9 +8,9 @@
 
 using namespace std;
 
-namespace MeySQL{
-    namespace Connect{
-        class Connection{
+namespace MeySQL {
+    namespace Connect {
+        class Connection {
         private:
             static size_t current_id;
 

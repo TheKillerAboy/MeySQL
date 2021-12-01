@@ -10,13 +10,13 @@
 using namespace boost;
 using namespace std;
 
-MeySQL::Connect::Connection::Connection(){
+MeySQL::Connect::Connection::Connection() {
     sock = nullptr;
     thr = nullptr;
     id = current_id++;
 }
 
-MeySQL::Connect::Connection::Connection(sockpp::tcp_socket sock_){
+MeySQL::Connect::Connection::Connection(sockpp::tcp_socket sock_) {
     sock = new sockpp::tcp_socket;
     thr = nullptr;
     *sock = std::move(sock_);
@@ -25,12 +25,12 @@ MeySQL::Connect::Connection::Connection(sockpp::tcp_socket sock_){
 
 size_t MeySQL::Connect::Connection::current_id = 0;
 
-MeySQL::Connect::Connection::~Connection(){}
+MeySQL::Connect::Connection::~Connection() {}
 
-void MeySQL::Connect::Connection::thread_loop(Connection* con){
+void MeySQL::Connect::Connection::thread_loop(Connection* con) {
     BOOST_LOG_TRIVIAL(debug) << "Created thread for " << *con;
 
-    try{
+    try {
         auto req = con->recieve();
 
         json::object req_json = json::parse(req).as_object();
@@ -40,18 +40,17 @@ void MeySQL::Connect::Connection::thread_loop(Connection* con){
 
         auto res = json::serialize(res_json);
         con->send(res);
-    }
-    catch (const std::exception& e){
-        if(con->get_socket()){
+    } catch (const std::exception& e) {
+        if(con->get_socket()) {
             BOOST_LOG_TRIVIAL(error) << e.what();
 
-            try{
+            try {
                 json::object res_json;
-                MeySQL::Connect::ConnectionRequests::append_status(MeySQL::Connect::ConnectionRequests::ResponseCode::ERROR, res_json);
+                MeySQL::Connect::ConnectionRequests::append_status(
+                    MeySQL::Connect::ConnectionRequests::ResponseCode::ERROR, res_json);
                 auto res = json::serialize(res_json);
                 con->send(res);
-            }
-            catch(...){}
+            } catch(...) {}
         }
     }
 
@@ -59,27 +58,27 @@ void MeySQL::Connect::Connection::thread_loop(Connection* con){
     delete con;
 }
 
-void MeySQL::Connect::Connection::start(){
+void MeySQL::Connect::Connection::start() {
     BOOST_LOG_TRIVIAL(debug) << "Creating thread for " << *this;
 
     thr = new thread(MeySQL::Connect::Connection::thread_loop, this);
     thr->detach();
 }
 
-sockpp::tcp_socket* MeySQL::Connect::Connection::get_socket(){
+sockpp::tcp_socket* MeySQL::Connect::Connection::get_socket() {
     return sock;
 }
 
-size_t MeySQL::Connect::Connection::get_id() const{
+size_t MeySQL::Connect::Connection::get_id() const {
     return id;
 }
 
-void MeySQL::Connect::Connection::send(const string& msg){
+void MeySQL::Connect::Connection::send(const string& msg) {
     BOOST_LOG_TRIVIAL(info) << "Sending: \"" << msg << "\" on " << *this;
     get_socket()->write(msg);
 }
 
-string MeySQL::Connect::Connection::recieve(){
+string MeySQL::Connect::Connection::recieve() {
     char buf[PAYLOAD_BUFFER_SIZE];
     size_t size =  get_socket()->read(buf, PAYLOAD_BUFFER_SIZE);
     string msg(buf, size);
@@ -87,7 +86,8 @@ string MeySQL::Connect::Connection::recieve(){
     return msg;
 }
 
-ostream& MeySQL::Connect::operator<<(ostream& os, const MeySQL::Connect::Connection& con){
+ostream& MeySQL::Connect::operator<<(ostream& os,
+                                     const MeySQL::Connect::Connection& con) {
     os << "Connection<ID:" << con.get_id() << ">";
 
     return os;

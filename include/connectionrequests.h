@@ -8,9 +8,9 @@
 using namespace boost;
 using namespace std;
 
-namespace MeySQL{
-    namespace Connect{
-        namespace ConnectionRequests{
+namespace MeySQL {
+    namespace Connect {
+        namespace ConnectionRequests {
             enum ResponseCode {
                 OK,
                 ERROR,

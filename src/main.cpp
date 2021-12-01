@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int main(){
+int main() {
     MeySQL::Connect::Server server;
     server.run();
 }
