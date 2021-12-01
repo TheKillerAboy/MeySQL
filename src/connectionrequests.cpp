@@ -1,18 +1,18 @@
 #include "connectionrequests.h"
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
+
 #include <string>
 #include "MeySQLConfig.h"
+#include <boost/json.hpp>
 
 using namespace std;
 
-MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionRequests::handle_request_inner(const boost::property_tree::ptree& req, boost::property_tree::ptree& res){
+MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionRequests::handle_request_inner(const boost::json::object& req, boost::json::object& res){
     try{
         bool found = false;
-        auto command = req.get<string>("command");
+        auto command = req.at("command").as_string();
 
-        boost::property_tree::ptree data;
-        res.add_child("data", data);
+        boost::json::object data;
+        res["data"] = data;
 
         if(command == "check-active"){
             found = true;
@@ -30,35 +30,35 @@ MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionReq
         }
     }
     catch(const exception& e){
-        res.put("status-reason", e.what());
+        res["status-reason"] = e.what();
         return ERROR;
     }
 }
 
-void MeySQL::Connect::ConnectionRequests::append_status(MeySQL::Connect::ConnectionRequests::ResponseCode rescode, boost::property_tree::ptree& res){
+void MeySQL::Connect::ConnectionRequests::append_status(MeySQL::Connect::ConnectionRequests::ResponseCode rescode, boost::json::object& res){
     switch (rescode) {
         case OK:
-            res.put("status", "OK");
+            res["status"] = "OK";
             break;
         case ERROR:
-            res.put("status", "ERROR");
+            res["status"] = "ERROR";
             break;
         case NOCOMMAND:
-            res.put("status", "NOCOMMAND");
+            res["status"] = "NOCOMMAND";
             break;
     }
 }
 
-MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionRequests::handle_request(const boost::property_tree::ptree& req, boost::property_tree::ptree& res){
+MeySQL::Connect::ConnectionRequests::ResponseCode MeySQL::Connect::ConnectionRequests::handle_request(const boost::json::object& req, boost::json::object& res){
     auto rescode = handle_request_inner(req, res);
     MeySQL::Connect::ConnectionRequests::append_status(rescode, res);
     return rescode;
 }
 
-void MeySQL::Connect::ConnectionRequests::check_active(const boost::property_tree::ptree& req, boost::property_tree::ptree& res){}
+void MeySQL::Connect::ConnectionRequests::check_active(const boost::json::object& req, boost::json::object& res){}
 
-void MeySQL::Connect::ConnectionRequests::server_config(const boost::property_tree::ptree& req, boost::property_tree::ptree& res){
-    res.put("version-major", MeySQL_VERSION_MAJOR);
-    res.put("version-minor", MeySQL_VERSION_MINOR);
-    res.put("MeySQL_PORT", MeySQL_PORT);
+void MeySQL::Connect::ConnectionRequests::server_config(const boost::json::object& req, boost::json::object& res){
+    res["version-major"] = MeySQL_VERSION_MAJOR;
+    res["version-minor"] = MeySQL_VERSION_MINOR;
+    res["MeySQL_PORT"] = MeySQL_PORT;
 }

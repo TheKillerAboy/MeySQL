@@ -22,8 +22,15 @@ fi
 #add run type to not compile thridparty
 
 if [ "$DELETE" = true ]; then
-    rm -rf ./build
-    echo "Removed Folder"
+    read -p 'You are about to delete built, you sure? (Y/[n]): ' dsurevar
+    dsurevar=${dsurevar:-n}
+    if [ "$dsurevar" = "Y" ]; then
+        rm -rf ./build
+        echo "Removed folder"
+    else
+        echo "Stoping build"
+        exit 0
+    fi;
 fi;
 
 if [ ! -d ./build ]; then

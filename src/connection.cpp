@@ -5,9 +5,7 @@
 #include "boost/log/trivial.hpp"
 #include <iostream>
 #include "connectionrequests.h"
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
-#include <sstream>
+#include <boost/json.hpp>
 
 using namespace std;
 
@@ -34,17 +32,12 @@ void MeySQL::Connect::Connection::thread_loop(Connection* con){
     try{
         auto req = con->recieve();
 
-        boost::property_tree::ptree req_json;
-        istringstream is(req);
-        boost::property_tree::read_json(is, req_json);
+        boost::json::object req_json = boost::json::parse(req).as_object();
 
-        boost::property_tree::ptree res_json;
+        boost::json::object res_json;
         auto rescode = MeySQL::Connect::ConnectionRequests::handle_request(req_json, res_json);
 
-        std::ostringstream res_buf; 
-        boost::property_tree::write_json (res_buf, res_json, false);
-
-        auto res = res_buf.str();
+        auto res = boost::json::serialize(res_json);
         con->send(res);
     }
     catch (const exception& e){
@@ -52,11 +45,9 @@ void MeySQL::Connect::Connection::thread_loop(Connection* con){
             BOOST_LOG_TRIVIAL(error) << e.what();
 
             try{
-                boost::property_tree::ptree res_json;
+                boost::json::object res_json;
                 MeySQL::Connect::ConnectionRequests::append_status(MeySQL::Connect::ConnectionRequests::ResponseCode::ERROR, res_json);
-                std::ostringstream res_buf; 
-                boost::property_tree::write_json (res_buf, res_json, false);
-                auto res = res_buf.str();
+                auto res = boost::json::serialize(res_json);
                 con->send(res);
             }
             catch(...){}
