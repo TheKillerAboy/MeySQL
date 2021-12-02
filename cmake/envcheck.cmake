@@ -1,0 +1,11 @@
+function(cxxcompile_check)
+    if(DEFINED ENV{CC})
+        set(CMAKE_C_COMPILER $ENV{CC})
+    endif()
+    if(DEFINED ENV{CXX})
+        set(CMAKE_CXX_COMPILER $ENV{CXX})
+    endif()
+
+    message("Using ${CMAKE_C_COMPILER} for CC")
+    message("Using ${CMAKE_CXX_COMPILER} for CXX")
+endfunction()
