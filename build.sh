@@ -18,8 +18,8 @@ done
 if [ "$SKIPSTYLE" = false ]; then
     printf "###Formatting###\n(use -s to skip this)\n\n"
     astyleoptions="--style=attach -RNKjSxC80"
-    ./thirdparty/astyle/astyle $astyleoptions "src/*.cpp"
-    ./thirdparty/astyle/astyle $astyleoptions "include/*.h"
+    ./thirdparty/astyle $astyleoptions "src/*.cpp"
+    ./thirdparty/astyle $astyleoptions "include/*.h"
     printf "\n###Formatting###\n"
 fi;
 
