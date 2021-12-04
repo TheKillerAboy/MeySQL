@@ -1,3 +1,5 @@
 pub mod connect;
 pub mod error;
-pub use crate::meysql::error::Result;
+pub mod config;
+pub use error::Result;
+pub use config::read_config;
