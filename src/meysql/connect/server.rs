@@ -7,15 +7,17 @@ pub struct Server{
 }
 
 impl Server{
-    pub fn new()->Result<Server>{
+    pub fn new(port: u64)->Result<Server>{
+        println!("Running on Port: {}", port);
         let server = Server{
-            listener:TcpListener::bind("127.0.0.1:3333")?,
-            id_gen: 0
+            listener:TcpListener::bind(format!("127.0.0.1:{}",port))?,
+            id_gen: 1
         };
         Ok(server)
     }
 
-    pub fn run(&mut self)->Result<()>{
+    pub fn run(&mut self, config: serde_yaml::Value)->Result<()>{
+        println!("Running Version: {}", config["version"].as_str().unwrap());
         for stream in self.listener.incoming() {
             let mut con = crate::meysql::connect::Connection::new(stream?, self.id_gen)?;
             self.id_gen+=1;
