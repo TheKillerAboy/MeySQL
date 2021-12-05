@@ -1,5 +1,5 @@
 use std::net::{TcpListener};
-use crate::meysql::Result;
+use crate::Result;
 
 pub struct Server{
     listener: TcpListener,
@@ -19,7 +19,7 @@ impl Server{
     pub fn run(&mut self, config: serde_yaml::Value)->Result<()>{
         println!("Running Version: {}", config["version"].as_str().unwrap());
         for stream in self.listener.incoming() {
-            let mut con = crate::meysql::connect::Connection::new(stream?, self.id_gen)?;
+            let mut con = crate::connect::Connection::new(stream?, self.id_gen)?;
             self.id_gen+=1;
             con.run()?;
         }

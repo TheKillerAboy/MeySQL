@@ -1,5 +1,5 @@
-use crate::meysql::Result;
-use crate::meysql::connect::interface::types::{Request,Response};
+use crate::Result;
+use crate::connect::interface::types::{Request,Response};
 
 pub trait Interface{
     fn name() -> Result<String>;

@@ -1,4 +1,3 @@
-mod meysql;
 use meysql::Result;
 use meysql::read_config;
 

@@ -1,8 +1,8 @@
-use crate::meysql::connect::interface::base::Interface;
-use crate::meysql::connect::interface::types::{Request,Response};
+use crate::connect::interface::base::Interface;
+use crate::connect::interface::types::{Request,Response};
 use serde_json::json;
-use crate::meysql::Result;
-use crate::meysql::read_config;
+use crate::Result;
+use crate::read_config;
 
 pub struct SystemInfo{}
 
