@@ -1,7 +1,7 @@
 use std::net::TcpStream;
-use crate::meysql::Result;
-use crate::meysql::connect::interface::types::{Request,Response};
-use crate::meysql::connect::interface::process;
+use crate::Result;
+use crate::connect::interface::types::{Request,Response};
+use crate::connect::interface::process;
 use serde_json::json;
 use std::io::{BufRead,BufReader,Write};
 

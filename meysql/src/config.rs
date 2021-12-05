@@ -1,5 +1,5 @@
 use serde_yaml::Value;
-use crate::meysql::Result;
+use crate::Result;
 
 pub fn read_config() -> Result<Value> {
     let f = std::fs::File::open("config.yaml")?;

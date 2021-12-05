@@ -1,6 +1,6 @@
 use serde_json::Value;
 use serde::{Deserialize, Serialize};
-use crate::meysql::Result;
+use crate::Result;
 
 #[derive(Deserialize,Serialize)]
 pub struct Request {
