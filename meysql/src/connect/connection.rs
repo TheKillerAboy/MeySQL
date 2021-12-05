@@ -20,12 +20,12 @@ impl Connection {
         let mut reader = BufReader::new(self.stream.try_clone()?);
         reader.read_line(&mut buf)?;
         let req: Request = serde_json::from_str(& buf)?;
-        println!("{} <Recieved {}>", self, json!(req));
+        log::info!("{} <Recieved {}>", self, json!(req));
         Ok(req)
     }
 
     fn send_res(&mut self, res : Response) -> Result<()> {
-        println!("{} <Sending: {}>", self, json!(res));
+        log::info!("{} <Sending: {}>", self, json!(res));
         let res_str = serde_json::to_string(&res)?;
         self.stream.write(&res_str.as_bytes())?;
         Ok(())
