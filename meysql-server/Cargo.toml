@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 meysql = { path = "../meysql" }
+env_logger = "0.9"
