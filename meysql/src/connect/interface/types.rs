@@ -8,13 +8,13 @@ pub struct Request {
     pub data: Value
 }
 
-#[derive(Serialize)]
+#[derive(Deserialize,Serialize)]
 pub struct ResponseStatus {
     pub r#type: String,
     pub reason: String
 }
 
-#[derive(Serialize)]
+#[derive(Deserialize,Serialize)]
 pub struct Response {
     pub status: ResponseStatus,
     pub data: Value
