@@ -17,6 +17,17 @@ def abort(code=1):
     print("Aborted!")
     exit(code)
 
+def __live_read_then_output(stream):
+    output = ""
+    while True:
+        line = stream.readline()
+        if not line:
+            break
+        line = line.decode("utf-8")
+        print(line)
+        output += line
+    return output
+
 def __logging(debug=False, level=None):
     if level is None:
         level = 'Debug' if debug else 'Info'
@@ -30,9 +41,8 @@ def __delete():
     print("Deleted build: `target`")
     
 def __build():
-    proc = subprocess.Popen(["cargo","build","--quiet"], stderr=subprocess.PIPE)
-    proc.wait()
-    output = proc.stderr.read().decode()
+    proc = subprocess.Popen(["cargo","build"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output = __live_read_then_output(proc.stderr)
     if 'error' in output:
         print("Error occured:")
         print(output)
@@ -42,13 +52,13 @@ def __run():
     subprocess.Popen(["cargo","run","--quiet"]).wait()
 
 def __test():
-    proc = subprocess.Popen(["cargo","test","--quiet"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    proc.wait()
-    output = proc.stdout.read().decode()
-    if 'FAILED' in output:
+    proc = subprocess.Popen(["cargo","test"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output = __live_read_then_output(proc.stdout)
+    if 'FAILED' in output or 'error' in output:
         print("Tests failed:")
         print(output)
         abort()
+    print('Tests Passed')
 
 def __get_config():
     with open(CONFIG_FILE,'r') as f:

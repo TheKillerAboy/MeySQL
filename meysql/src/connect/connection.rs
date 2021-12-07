@@ -26,7 +26,7 @@ impl Connection {
 
     fn send_res(&mut self, res : Response) -> Result<()> {
         log::info!("{} <Sending: {}>", self, json!(res));
-        let res_str = serde_json::to_string(&res)?;
+        let res_str = serde_json::to_string(&res)? + "\n";
         self.stream.write(&res_str.as_bytes())?;
         Ok(())
     }
