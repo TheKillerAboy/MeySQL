@@ -3,7 +3,7 @@ pub mod system_info;
 pub mod base;
 use crate::Result;
 use types::{Request, Response};
-use system_info::SystemInfo;
+pub use system_info::SystemInfo;
 use crate::connect::interface::base::Interface;
 use serde_json::json;
 
