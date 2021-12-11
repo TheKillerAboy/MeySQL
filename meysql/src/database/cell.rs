@@ -27,6 +27,7 @@ impl error::Error for CellTypeError {
     }
 }
 
+#[derive(Debug)]
 pub struct Cell{
     layout: Option<alloc::Layout>,
     value: *mut u8,
@@ -121,5 +122,29 @@ impl Cell{
 
     pub fn get_type(& self) -> Result<Types>{
         Ok(self.r#type)
+    }
+
+    pub fn eq(&self, rhs: &Cell) -> Result<bool>{
+        if self.r#type != rhs.r#type{
+            return Ok(false);
+        }
+        match self.r#type{
+            Types::BOOL => Ok(self.get_bool()? == rhs.get_bool()?),
+            Types::CHAR => Ok(self.get_char()? == rhs.get_char()?),
+            Types::INT => Ok(self.get_int()? == rhs.get_int()?),
+            Types::FLOAT => Ok(self.get_float()? == rhs.get_float()?),
+            Types::DOUBLE => Ok(self.get_double()? == rhs.get_double()?),
+            Types::STRING => Ok(self.get_string()? == rhs.get_string()?),
+            Types::NULL => Ok(false)
+        }
+    }
+}
+
+impl PartialEq for Cell{
+    fn eq(&self, rhs: &Cell) -> bool{
+        match self.eq(rhs){
+            Ok(eq) => return eq,
+            Err(e) => panic!("{:?}", e)
+        }
     }
 }
