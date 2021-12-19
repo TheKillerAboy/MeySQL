@@ -72,7 +72,7 @@ impl FileHandler {
         Ok(())
     }
     pub fn delete_range(&mut self, l: FAddress, s: u64) -> Result<()>{
-        match (self.queue_l.get_index_of(&(l+s))){
+        match self.queue_l.get_index_of(&(l+s)){
             Some(i) => {
                 self.queue_l.remove(&(l+s));
                 self.queue_l.insert(l);
@@ -80,7 +80,7 @@ impl FileHandler {
             }
             _ => {}
         }
-        match (self.queue_r.get_index_of(&(l-1))){
+        match self.queue_r.get_index_of(&(l-1)){
             Some(i) => {
                 self.queue_r.remove(&(l-1));
                 self.queue_r.insert(l+s-1);
