@@ -7,7 +7,6 @@ mod database_tests {
     use crate::database::RowSchema;
     use crate::database::Generator;
     use crate::database::Database;
-    use crate::database::Table;
 
     fn init() {
         let _ = env_logger::builder().is_test(true).try_init();
