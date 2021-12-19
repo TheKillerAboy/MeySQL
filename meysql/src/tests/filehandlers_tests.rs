@@ -142,6 +142,12 @@ mod filehandlers_tests {
             file.close()?;
         }
         {
+            let file = FileHandler::open("tests_tmp/file_handler_delete_test.db")?;
+            log::debug!("Delete Queue {:?} {:?}", file.queue_l, file.queue_r);
+            assert_eq!(file.queue_l.len(), 1);
+            assert_eq!(file.queue_r.len(), 1);
+        }
+        {
             {
                 File::create("tests_tmp/file_handler_delete_test1.db")?;
             }
@@ -156,6 +162,12 @@ mod filehandlers_tests {
             assert_eq!(file.queue_l.len(), 1);
             assert_eq!(file.queue_r.len(), 1);
             file.close()?;
+        }
+        {
+            let file = FileHandler::open("tests_tmp/file_handler_delete_test1.db")?;
+            log::debug!("Delete Queue {:?} {:?}", file.queue_l, file.queue_r);
+            assert_eq!(file.queue_l.len(), 1);
+            assert_eq!(file.queue_r.len(), 1);
         }
         Ok(())
     }
