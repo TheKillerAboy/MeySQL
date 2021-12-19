@@ -2,3 +2,4 @@ target
 **/venv/
 **/.idea
 **/.vscode
+**/tests_tmp

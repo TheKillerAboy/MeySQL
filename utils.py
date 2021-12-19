@@ -158,9 +158,9 @@ def build(
     __logging(debug=debug_on)
     if delete_old_build:
         __delete()
+    __build()
     if test_build:
         __test()
-    __build()
     if run_build:
         __run()
 
@@ -173,7 +173,17 @@ def run():
     __run()
 
 @app.command()
-def test():
+def test(
+    debug_on:bool=
+        Option(
+            False,
+            '--debug',
+            '-db',
+            help="Enable debuging for logging"
+        )  
+):
+    __logging(debug=debug_on)
+    __build()
     __test()
 
 @app.command()

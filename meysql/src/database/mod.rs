@@ -5,6 +5,7 @@ pub mod rowschema;
 pub mod generator;
 pub mod table;
 pub mod database;
+pub mod filehandlers;
 
 pub use cell::Cell;
 pub use types::Types;

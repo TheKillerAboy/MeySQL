@@ -1,3 +1,5 @@
+extern crate positioned_io_preview as positioned_io;
+
 pub mod connect;
 pub mod error;
 pub mod config;
