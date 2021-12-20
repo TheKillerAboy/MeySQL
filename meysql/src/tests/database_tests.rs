@@ -3,6 +3,7 @@ mod database_tests {
     use crate::Result;
     use crate::database::Types;
     use crate::database::Cell;
+    use crate::database::CellTrait;
     use crate::database::Row;
     use crate::database::RowSchema;
     use crate::database::Generator;
@@ -18,28 +19,28 @@ mod database_tests {
         let mut cell = Cell::new()?;
         assert_eq!(cell.get_type()?, Types::NULL);
 
-        cell.set_bool(true)?;
-        assert_eq!(cell.get_bool()?, true);
+        cell.set_value::<bool>(true)?;
+        assert_eq!(cell.get_value::<bool>()?, true);
         assert_eq!(cell.get_type()?, Types::BOOL);
 
-        cell.set_char('c')?;
-        assert_eq!(cell.get_char()?, 'c');
+        cell.set_value::<char>('c')?;
+        assert_eq!(cell.get_value::<char>()?, 'c');
         assert_eq!(cell.get_type()?, Types::CHAR);
 
-        cell.set_int(1234)?;
-        assert_eq!(cell.get_int()?, 1234);
+        cell.set_value::<u64>(1234)?;
+        assert_eq!(cell.get_value::<u64>()?, 1234);
         assert_eq!(cell.get_type()?, Types::INT);
 
-        cell.set_float(1.5)?;
-        assert_eq!(cell.get_float()?, 1.5);
+        cell.set_value::<f32>(1.5)?;
+        assert_eq!(cell.get_value::<f32>()?, 1.5);
         assert_eq!(cell.get_type()?, Types::FLOAT);
 
-        cell.set_double(1.55)?;
-        assert_eq!(cell.get_double()?, 1.55);
+        cell.set_value::<f64>(1.55)?;
+        assert_eq!(cell.get_value::<f64>()?, 1.55);
         assert_eq!(cell.get_type()?, Types::DOUBLE);
 
-        cell.set_string("hello daar")?;
-        assert_eq!(cell.get_string()?, "hello daar");
+        cell.set_value("hello daar".to_string())?;
+        assert_eq!(cell.get_value::<String>()?, "hello daar");
         assert_eq!(cell.get_type()?, Types::STRING);
 
         cell.set_null()?;
@@ -53,13 +54,13 @@ mod database_tests {
         match i{
             0 => {
                 let mut id = Cell::new()?;
-                id.set_int(12)?;
+                id.set_value::<u64>(12)?;
 
                 let mut name = Cell::new()?;
-                name.set_string("Annekin")?;
+                name.set_value("Annekin".to_string())?;
 
                 let mut surname = Cell::new()?;
-                surname.set_string("Meyburgh")?;
+                surname.set_value("Meyburgh".to_string())?;
 
                 cells = vec![id, name, surname];
             }
@@ -79,17 +80,17 @@ mod database_tests {
         example_row_1.set_id(2223);
         assert_eq!(example_row_1.get_id()?, 2223);
 
-        assert_eq!(example_row_1[0].get_int()?, 12);
-        assert_eq!(example_row_1[1].get_string()?, "Annekin");
-        assert_eq!(example_row_1[2].get_string()?, "Meyburgh");
+        assert_eq!(example_row_1[0].get_value::<u64>()?, 12);
+        assert_eq!(example_row_1[1].get_value::<String>()?, "Annekin");
+        assert_eq!(example_row_1[2].get_value::<String>()?, "Meyburgh");
 
         let mut eval = Cell::new()?;
 
-        eval.set_int(12)?;
+        eval.set_value::<u64>(12)?;
         assert_eq!(example_row_1[0], eval);
-        eval.set_string("Annekin")?;
+        eval.set_value("Annekin".to_string())?;
         assert_eq!(example_row_1[1], eval);
-        eval.set_string("Meyburgh")?;
+        eval.set_value("Meyburgh".to_string())?;
         assert_eq!(example_row_1[2], eval);
 
         Ok(())

@@ -3,3 +3,4 @@ target
 **/.idea
 **/.vscode
 **/tests_tmp
+.DS_Store
