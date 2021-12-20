@@ -47,7 +47,7 @@ pub trait CellTrait{
         cell.set_value_prim::<Self>(val, Self::cell_type()?)?;
         Ok(())
     }
-    fn eq(cellA: &Cell, cellB: &Cell) -> Result<bool>
+    fn cell_eq(cellA: &Cell, cellB: &Cell) -> Result<bool>
     where Self: Clone,
           Self: PartialEq{
         if cellA.r#type != cellB.r#type{
@@ -106,6 +106,23 @@ impl Cell{
     }
     pub fn get_type(&self) -> Result<Types>{
         Ok(self.r#type)
+    }
+    pub fn eq(&self, other: &Cell) -> Result<bool>{
+        match self.get_type()?{
+            Types::BOOL => return Ok(bool::cell_eq(self, other)?),
+            Types::CHAR => return Ok(char::cell_eq(self, other)?),
+            Types::INT => return Ok(u64::cell_eq(self, other)?),
+            Types::FLOAT => return Ok(f32::cell_eq(self, other)?),
+            Types::DOUBLE => return Ok(f64::cell_eq(self, other)?),
+            Types::STRING => return Ok(String::cell_eq(self, other)?),
+            _ => {}
+        }
+        Ok(false)
+    }
+}
+impl PartialEq for Cell {
+    fn eq(&self, other: &Self) -> bool {
+        self.eq(other).unwrap()
     }
 }
 

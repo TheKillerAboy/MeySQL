@@ -86,6 +86,13 @@ mod database_tests {
 
         let mut eval = Cell::new()?;
 
+        eval.set_value::<u64>(12)?;
+        assert_eq!(example_row_1[0], eval);
+        eval.set_value("Annekin".to_string())?;
+        assert_eq!(example_row_1[1], eval);
+        eval.set_value("Meyburgh".to_string())?;
+        assert_eq!(example_row_1[2], eval);
+
         Ok(())
     }
 
