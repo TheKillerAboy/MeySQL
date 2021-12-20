@@ -8,6 +8,7 @@ pub mod database;
 pub mod filehandlers;
 
 pub use cell::Cell;
+pub use cell::CellTrait;
 pub use types::Types;
 pub use row::Row;
 pub use rowschema::RowSchema;
